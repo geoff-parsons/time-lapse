@@ -9,7 +9,7 @@ AudioSnippet snap;
 int nextPic = 0;
 
 String fileName() {
-  return "CSDK-"+year()+month()+day()+hour()+minute()+second()+".png";
+  return "SMAP-"+year()+month()+day()+hour()+minute()+second()+".png";
 }
 
 int secAdd(int time, int addSec) {
@@ -24,7 +24,7 @@ void setup() {
   size(800, 600);
   minim = new Minim(this);
   cam = new Capture(this, width, height, 15);
-  snap = minim.loadSnippet("shutter.aiff");
+  snap = minim.loadSnippet("shutter.wav");
   nextPic = secAdd(second(), secs);
 }
 
@@ -34,13 +34,11 @@ void draw() {
   }
   image(cam, 0, 0);
   if( second() == nextPic ) {
-    println("sec = "+second());
     snap.play();
     saveFrame(fileName());
     background(255,255,255);
     delay(200);
     nextPic = secAdd(nextPic, secs);
-    println("next = "+nextPic);
   }
 }
 
