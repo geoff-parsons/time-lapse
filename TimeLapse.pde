@@ -9,6 +9,7 @@ AudioSample shutter;
 long nextPic = 0;
 Date date;
 long timestamp;
+PFont font;
 
 String fileName() {
   return "SMAP-"+timestamp+".png";
@@ -21,6 +22,9 @@ long getTime() {
 
 void setup() {
   size(800, 600);
+  font = loadFont("SansSerif-24.vlw");
+  textFont(font);
+  
   minim = new Minim(this);
   cam = new Capture(this, width, height, 15);
   shutter = minim.loadSample("shutter.wav");
@@ -41,6 +45,9 @@ void draw() {
     background(255,255,255);
     delay(200);
     nextPic = timestamp + secs;
+  } else {
+    fill(255);
+    text( Math.round(nextPic-timestamp), 10, 30);
   }
 }
 
