@@ -6,18 +6,17 @@ int secs = 10;
 Capture cam;
 Minim minim;
 AudioSample shutter;
-int nextPic = 0;
+long nextPic = 0;
+Date date;
+long timestamp;
 
 String fileName() {
-  return "SMAP-"+year()+month()+day()+hour()+minute()+second()+".png";
+  return "SMAP-"+timestamp+".png";
 }
 
-int secAdd(int time, int addSec) {
-  int result = time + addSec;
-  if( result < 60 ) {
-    return result;
-  }
-  return result-60;
+long getTime() {
+  date = new Date();
+  return date.getTime()/1000;
 }
 
 void setup() {
@@ -25,20 +24,23 @@ void setup() {
   minim = new Minim(this);
   cam = new Capture(this, width, height, 15);
   shutter = minim.loadSample("shutter.wav");
-  nextPic = secAdd(second(), secs);
+  timestamp = getTime();
+  nextPic = timestamp + secs;
 }
 
 void draw() {
+  
   if(cam.available()) {
     cam.read();
   }
   image(cam, 0, 0);
-  if( second() == nextPic ) {
+  timestamp = getTime();
+  if( timestamp == nextPic ) {
     shutter.trigger();
     saveFrame(fileName());
     background(255,255,255);
     delay(200);
-    nextPic = secAdd(nextPic, secs);
+    nextPic = timestamp + secs;
   }
 }
 
