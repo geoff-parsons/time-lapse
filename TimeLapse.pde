@@ -12,7 +12,7 @@ long timestamp;
 PFont font;
 
 String fileName() {
-  return "SMAP-"+timestamp+".png";
+  return "SNAP-"+timestamp+".png";
 }
 
 long getTime() {
@@ -27,7 +27,7 @@ void setup() {
   
   minim = new Minim(this);
   cam = new Capture(this, width, height, 15);
-  shutter = minim.loadSample("shutter.wav");
+  shutter = minim.loadSample("data/shutter.wav");
   timestamp = getTime();
   nextPic = timestamp + secs;
 }
