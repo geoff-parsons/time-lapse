@@ -5,7 +5,7 @@ int secs = 10;
 
 Capture cam;
 Minim minim;
-AudioSnippet snap;
+AudioSample shutter;
 int nextPic = 0;
 
 String fileName() {
@@ -24,7 +24,7 @@ void setup() {
   size(800, 600);
   minim = new Minim(this);
   cam = new Capture(this, width, height, 15);
-  snap = minim.loadSnippet("shutter.wav");
+  shutter = minim.loadSample("shutter.wav");
   nextPic = secAdd(second(), secs);
 }
 
@@ -34,11 +34,17 @@ void draw() {
   }
   image(cam, 0, 0);
   if( second() == nextPic ) {
-    snap.play();
+    shutter.trigger();
     saveFrame(fileName());
     background(255,255,255);
     delay(200);
     nextPic = secAdd(nextPic, secs);
   }
+}
+
+void stop() {
+  shutter.close();
+  minim.stop();
+  super.stop();
 }
 
