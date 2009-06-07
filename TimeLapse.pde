@@ -1,7 +1,7 @@
 import ddf.minim.*;
 import processing.video.*;
 
-int secs = 10;
+int secs = 150;
 
 Capture cam;
 Minim minim;
@@ -46,8 +46,11 @@ void draw() {
     delay(200);
     nextPic = timestamp + secs;
   } else {
+    fill(0);
+    rect(8, 7, 60, 25);
     fill(255);
-    text( Math.round(nextPic-timestamp), 10, 30);
+    textAlign(CENTER);
+    text( String.valueOf(Math.round(nextPic-timestamp)), 8, 8, 60, 25);
   }
 }
 
